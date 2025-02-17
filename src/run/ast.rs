@@ -59,6 +59,16 @@ fn parse_redirections(
 
     while let Some(&token) = tokens.peek() {
         match token {
+            Token::OutputRedirection => {
+                tokens.next(); // Consume `&>`
+                let rhs = parse_commands(tokens)?;
+                node = Ast::OutputRedirection(Box::new(node), Box::new(rhs));
+            }
+            Token::InputRedirection => {
+                tokens.next(); // Consume `<`
+                let rhs = parse_commands(tokens)?;
+                node = Ast::InputRedirection(Box::new(node), Box::new(rhs));
+            }
             Token::OverwriteRedirection => {
                 tokens.next(); // Consume `>`
                 let rhs = parse_commands(tokens)?;
