@@ -20,6 +20,10 @@ pub fn execute(args: &[String]) -> Result<(), ShellError> {
             bic::exit(code);
             Ok(())
         }
+        "time" => {
+            bic::time(&args.iter().skip(1).map(|e| e.to_string()).collect::<Vec<String>>().join(" "));
+            Ok(())
+        }
         _ => {
             let mut command = Command::new(&args[0]);
             if args.len() > 1 {

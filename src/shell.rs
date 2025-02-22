@@ -1,5 +1,8 @@
 use crate::{run, terminal::TERMINAL};
-use std::{io::{self, stdin, stdout, Write}, str};
+use std::{
+    io::{self, stdin, stdout, Write},
+    str,
+};
 mod dir;
 
 struct Shell {
