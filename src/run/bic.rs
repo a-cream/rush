@@ -1,4 +1,5 @@
 use crate::run;
+use crate::terminal::TERMINAL;
 use libc::{getrusage, rusage, RUSAGE_SELF};
 use std::{env, path::Path, time::Instant};
 
@@ -52,5 +53,7 @@ pub fn time(args: &str) {
 }
 
 pub fn exit(code: i32) {
-    std::process::exit(code);
+    let mut terminal = TERMINAL.lock().unwrap();
+    terminal.exit = true;
+    terminal.exit_code = Some(code);
 }

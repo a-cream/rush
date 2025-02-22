@@ -41,7 +41,7 @@ impl Shell {
     }
 }
 
-pub fn run() {
+pub fn run() -> i32 {
     let mut shell = Shell::new(None);
     loop {
         shell.handle_dir();
@@ -50,6 +50,9 @@ pub fn run() {
             Err(e) => eprintln!("{e}"),
         }
         let mut terminal = TERMINAL.lock().unwrap();
+        if terminal.exit {
+            return terminal.exit_code.unwrap();
+        }
         if !terminal.print.is_empty() {
             print!("{}", terminal.print);
             stdout().flush().unwrap();
