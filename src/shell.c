@@ -7,7 +7,7 @@ void Shell_init(Shell *self, char *prompt) {
 }
 
 char *Shell_interactive(Shell *self) {
-    int length = 50;
+    int length = 256;
     char *str = (char *)malloc(length * sizeof(char));
     if (str == NULL) {
         perror("Memory allocation failed");
