@@ -22,7 +22,7 @@ void shell_run() {
     Shell shell;
     Shell_init(&shell, " >");
 
-    while (1) {
+    for (;;) {
         char *input = Shell_interactive(&shell);
         printf("%s", input);
         free(input);
