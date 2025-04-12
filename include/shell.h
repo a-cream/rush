@@ -13,4 +13,4 @@ char *Shell_interactive(Shell *self);
 
 void shell_run(void);
 
-#endif
+#endif // !SHELL_H

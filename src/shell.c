@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/shell.h"
+#include "../include/interpreter/lexer.h"
 
 void Shell_init(Shell *self, char *prompt) {
     self->prompt = prompt;
@@ -32,7 +33,9 @@ void shell_run(void) {
             break;
         }
 
-        printf("%s", input);
-        free(input);
+        Lexer lexer;
+        Lexer_init(&lexer, input);
+        Token *tokens = Lexer_lex(&lexer);
+        printf("%s\n", tokens[0].value);
     }
 }
