@@ -2,21 +2,20 @@
 
 Rush is a fast and minimal shell, designed to be a complete and efficient shell for everyday use. It aims to provide a seamless and performant experience while adhering to POSIX standards. 
 
-Note: It's still in it's early stage's so expect some bugs!
+Note: It's still in it's early stage's so expect so expect bugs.
 
 ## Features
 
 - **POSIX Compliant**: Ensures compatibility with a wide range of Unix-like systems.
 - **High Performance**: Optimized for speed and efficiency.
 - **Minimalistic Design**: Focuses on essential features without unnecessary bloat.
-- **Extensible**: Easily extendable with custom scripts and plugins.
 
 ## Getting Started
 
 ### Prerequisites
 
 - **Cmake**
-- **gcc/clang or any other c compiler**
+- **C compiler**
 
 ### Installing
 
@@ -30,10 +29,6 @@ Note: It's still in it's early stage's so expect some bugs!
     ```sh
     cmake -S . -B build && cmake --build build
     ```
-
-### Usage
-
-Once installed, you can start using Rush by simply typing `rush` in your terminal.
 
 ## Contributing
 
