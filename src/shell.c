@@ -13,17 +13,25 @@ char *Shell_interactive(Shell *self) {
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
+
     printf("%s ", self->prompt);
-    fgets(str, length, stdin);
+    if (fgets(str, length, stdin) == NULL) {
+        free(str);
+        return NULL;
+    }
     return str;
 }
 
-void shell_run() {
+void shell_run(void) {
     Shell shell;
     Shell_init(&shell, " >");
 
     for (;;) {
         char *input = Shell_interactive(&shell);
+        if (input == NULL) {
+            break;
+        }
+
         printf("%s", input);
         free(input);
     }
