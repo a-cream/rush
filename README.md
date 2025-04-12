@@ -15,7 +15,8 @@ Note: It's still in it's early stage's so expect some bugs!
 
 ### Prerequisites
 
-- **Rust**: Ensure you have Rust installed. You can install Rust from [here](https://www.rust-lang.org/tools/install).
+- **Cmake**
+- **gcc/clang or any other c compiler**
 
 ### Installing
 
@@ -25,9 +26,9 @@ Note: It's still in it's early stage's so expect some bugs!
     cd rush
     ```
 
-2. **Install Rush to your path:**
+2. **Compile:**
     ```sh
-    cargo install --path .
+    cmake -S . -B build && cmake --build build
     ```
 
 ### Usage
@@ -36,7 +37,7 @@ Once installed, you can start using Rush by simply typing `rush` in your termina
 
 ## Contributing
 
-We welcome contributions from the community! If you would like to contribute, please follow these steps:
+If you would like to contribute, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
