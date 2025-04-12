@@ -47,8 +47,3 @@ We welcome contributions from the community! If you would like to contribute, pl
 ## License
 
 This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Thanks to all the contributors who have helped in making this project better.
-- Special thanks to the Rust community for their support and contributions.
