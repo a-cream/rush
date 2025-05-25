@@ -27,6 +27,9 @@ const Shell = struct {
 
 pub fn run() !void {
     const shell = Shell.new("> ");
-    const input = try shell.input();
-    std.debug.print("{s}\n", .{input});
+
+    while (true) {
+        const input = try shell.input();
+        std.debug.print("{s}\n", .{input});
+    }
 }
