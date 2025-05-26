@@ -7,21 +7,17 @@ const Shell = struct {
         return Shell{ .prompt = prompt };
     }
 
-    fn input(self: Shell) ![]const u8 {
-        const stdout_file = std.io.getStdOut().writer();
-        var bw = std.io.bufferedWriter(stdout_file);
-        const stdout = bw.writer();
-
-        try stdout.print("{s}", .{self.prompt});
-
-        try bw.flush();
-
+    fn ask(self: Shell, buf: []u8) ![]const u8 {
         const stdin = std.io.getStdIn().reader();
-        var buf: [100]u8 = undefined;
+        const stdout = std.io.getStdOut().writer();
 
-        const user_input = try stdin.readUntilDelimiterOrEof(&buf, '\n');
+        _ = try stdout.print("{s}", .{self.prompt});
 
-        return user_input orelse error.EndOfFile;
+        const input = (try stdin.readUntilDelimiterOrEof(buf, '\n')) orelse {
+            return error.Null;
+        };
+
+        return input;
     }
 };
 
@@ -29,7 +25,9 @@ pub fn run() !void {
     const shell = Shell.new("> ");
 
     while (true) {
-        const input = try shell.input();
+        var buf: [1024]u8 = undefined;
+        const input = try shell.ask(&buf);
+
         std.debug.print("{s}\n", .{input});
     }
 }
