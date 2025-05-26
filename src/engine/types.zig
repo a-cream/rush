@@ -1,3 +1,7 @@
-pub const Token = union(enum) {
-    Arg: []const u8,
+pub const TokenType = enum {
+    command,
+};
+
+pub const Token = union(TokenType) {
+    command: []const u8,
 };
