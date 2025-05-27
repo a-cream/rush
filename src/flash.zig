@@ -1,4 +1,5 @@
 const std = @import("std");
+const lexer = @import("engine/lexer.zig");
 
 const Shell = struct {
     prompt: []const u8,
@@ -7,7 +8,7 @@ const Shell = struct {
         return Shell{ .prompt = prompt };
     }
 
-    fn ask(self: Shell, buf: []u8) ![]const u8 {
+    fn ask(self: Shell, buf: []u8) ![]u8 {
         const stdin = std.io.getStdIn().reader();
         const stdout = std.io.getStdOut().writer();
 
@@ -27,6 +28,12 @@ pub fn run() !void {
     while (true) {
         var buf: [1024]u8 = undefined;
         const input = try shell.ask(&buf);
+
+        const result = try lexer.lex(input);
+
+        for (result.items) |r| {
+            std.debug.print("cmd: {s}\n", .{r.value});
+        }
 
         std.debug.print("{s}\n", .{input});
     }
