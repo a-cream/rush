@@ -1,7 +1,6 @@
 const std = @import("std");
 
 var buffer: [1000]u8 = undefined;
-
 var fba = std.heap.FixedBufferAllocator.init(&buffer);
 const allocator = fba.allocator();
 
@@ -22,9 +21,12 @@ pub fn lex(source: []u8) !std.ArrayList(Token) {
         const current = source[start];
 
         switch (current) {
-            'a'...'z' => {
+            'a'...'z', 'A'...'Z' => {
                 const i = start;
-                while (start < source.len and source[start] >= 'a' and source[start] <= 'z') {
+                while (start < source.len and
+                    ((source[start] >= 'a' and source[start] <= 'z') or
+                        (source[start] >= 'A' and source[start] <= 'Z')))
+                {
                     start += 1;
                 }
                 try tokens.append(Token{ .kind = TokenKind.command, .value = source[i..start] });
