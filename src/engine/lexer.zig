@@ -39,5 +39,6 @@ pub fn lex(source: []u8) !std.ArrayList(Token) {
         }
     }
 
+    try tokens.append(Token{ .kind = TokenKind.EOF, .value = void});
     return tokens;
 }
