@@ -5,7 +5,8 @@ var fba = std.heap.FixedBufferAllocator.init(&buffer);
 const allocator = fba.allocator();
 
 pub const TokenKind = enum {
-    atomic,
+    Atomic,
+    Land,
     EOF,
 };
 
@@ -30,7 +31,15 @@ pub fn lex(source: []u8) !std.ArrayList(Token) {
                 {
                     start += 1;
                 }
-                try tokens.append(Token{ .kind = TokenKind.atomic, .value = source[i..start] });
+                try tokens.append(Token{ .kind = TokenKind.Atomic, .value = source[i..start] });
+            },
+            '&' => {
+                    if (start + 1 < source.len and source[start + 1] == '&') {
+                    try tokens.append(Token{ .kind = TokenKind.Land, .value = source[start .. start + 2] });
+                    start += 2;
+                } else {
+                    return error.InvalidChar;
+                }
             },
             ' ', '\n', '\t' => start += 1,
             else => {
@@ -39,6 +48,6 @@ pub fn lex(source: []u8) !std.ArrayList(Token) {
         }
     }
 
-    try tokens.append(Token{ .kind = TokenKind.EOF, .value = void});
+    try tokens.append(Token{ .kind = TokenKind.EOF, .value = source[0..1] });
     return tokens;
 }

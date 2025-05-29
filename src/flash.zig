@@ -1,5 +1,6 @@
 const std = @import("std");
 const lexer = @import("engine/lexer.zig");
+const parse = @import("engine/parser.zig");
 
 const Shell = struct {
     prompt: []const u8,
@@ -31,10 +32,29 @@ pub fn run() !void {
 
         const result = try lexer.lex(input);
 
-        for (result.items) |r| {
-            std.debug.print("cmd: {s}\n", .{r.value});
+        for (result.items) |token| {
+            std.debug.print("kind: {}, value: {s}\n", .{ token.kind, token.value });
         }
 
-        std.debug.print("{s}\n", .{input});
+        var cursor: usize = 0;
+        const expr = try parse.expression(result.items, &cursor, 0);
+        try print_expr(expr);
+    }
+}
+
+fn print_expr(expr: parse.Expr) !void {
+    const stdout = std.io.getStdOut().writer();
+
+    switch (expr) {
+        .atomic => |val| {
+            for (val.items) |result| {
+                try stdout.print("atomic: {s}\n", .{result});
+            }
+        },
+        .binary => |b| {
+            try stdout.print("binary op: {any}\n", .{b.op});
+            try print_expr(b.ll.*);
+            try print_expr(b.rr.*);
+        },
     }
 }
