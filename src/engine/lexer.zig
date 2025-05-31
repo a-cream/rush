@@ -48,6 +48,6 @@ pub fn lex(source: []u8) !std.ArrayList(Token) {
         }
     }
 
-    try tokens.append(Token{ .kind = TokenKind.EOF, .value = source[0..1] });
+    try tokens.append(Token{ .kind = TokenKind.EOF, .value = @constCast(&[3]u8{'E', 'O', 'F'}) });
     return tokens;
 }
